@@ -14,6 +14,7 @@ const handleMouseDown = (opretion) => {
     interveRef.current = setInterval(() => {
         setCount((prev) => {
             let newValue = opretion === "add" ? prev + 1 : prev - 1;
+            opretion === 'add' ? playSound("increase") : playSound("decrease");
             if(newValue >=200 || newValue <=0){
                 clearInterval(interveRef.current);
                 interveRef.current = null;
