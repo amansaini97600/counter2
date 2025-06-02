@@ -2,40 +2,40 @@ import { use, useRef, useState } from 'react';
 import useSound from '../hooks/useSound'
 
 
-function Counter() {
+function Counter({theme}) {
     const [count, setCount] = useState(0);
     const [error, setError] = useState("");
     const interveRef = useRef(null);
     const playSound = useSound();
-// this function for fast increase and decrease count
-const handleMouseDown = (opretion) => {
-    if(interveRef.current) return;
+    // this function for fast increase and decrease count
+    const handleMouseDown = (opretion) => {
+        if (interveRef.current) return;
 
-    interveRef.current = setInterval(() => {
-        setCount((prev) => {
-            let newValue = opretion === "add" ? prev + 1 : prev - 1;
-            opretion === 'add' ? playSound("increase") : playSound("decrease");
-            if(newValue >=200 || newValue <=0){
-                clearInterval(interveRef.current);
-                interveRef.current = null;
-                return opretion === "add" ? 200 : 0; 
-            }
-            return newValue;
-        })
-    },100);
-}
+        interveRef.current = setInterval(() => {
+            setCount((prev) => {
+                let newValue = opretion === "add" ? prev + 1 : prev - 1;
+                opretion === 'add' ? playSound("increase") : playSound("decrease");
+                if (newValue >= 200 || newValue <= 0) {
+                    clearInterval(interveRef.current);
+                    interveRef.current = null;
+                    return opretion === "add" ? 200 : 0;
+                }
+                return newValue;
+            })
+        }, 100);
+    }
 
-// this function for stop fast increase and decrease
+    // this function for stop fast increase and decrease
 
-const handleMouseUp = () => {
-    clearInterval(interveRef.current);
-    interveRef.current = null;
-}
+    const handleMouseUp = () => {
+        clearInterval(interveRef.current);
+        interveRef.current = null;
+    }
 
 
-// this function for increase count
-const increase = () => {
-    if (count < 200) {
+    // this function for increase count
+    const increase = () => {
+        if (count < 200) {
             setCount(count + 1);
             setError("");
             playSound("increase");
@@ -43,7 +43,7 @@ const increase = () => {
             setError("Max limit reached (200)")
         }
     }
-    
+
     // this function for decrease count
     const decrease = () => {
         if (count > 0) {
@@ -54,7 +54,7 @@ const increase = () => {
             setError("count cnanot be less than 0");
         }
     }
-    
+
     // this function for reset count
     const reset = () => {
         setError("")
@@ -64,9 +64,12 @@ const increase = () => {
 
     return (
         <>
-            <div className="mainContenair">
+            <div className="mainContainer">
                 <h1>Counter App</h1>
-                <h2>Click To Button</h2>
+                <h2>Click The Button</h2>
+                <div className='progres-bar'>
+                    <div className='fill' style={{width: `${(count/200) * 100}%`}}></div>
+                </div>
                 {error && <p style={{ color: "red", margin: "0px" }}>{error}</p>}
                 <h2>{count}</h2>
                 <div>
