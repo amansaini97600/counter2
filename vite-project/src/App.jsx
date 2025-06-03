@@ -1,22 +1,29 @@
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import Counter from "./components/counter";
 import './styles/style.css';
 import './styles/theme.css';
 import ThemeToggle from "./components/themeToggle";
+import SoundSetting from './components/soundSetting';
 
-function App(){
+
+
+function App() {
   const [theme, setTheme] = useState("light");
   useEffect(() => {
     document.body.className = theme;
-  },[theme]);
+  }, [theme]);
 
-  const toggleTheme = () =>{
+  const toggleTheme = () => {
     setTheme((prev) => (prev === "light" ? "dark" : "light"))
   }
-  return(
+  return (
     <div className='container'>
-      <Counter theme={theme}/>
-      <ThemeToggle theme={theme} toggleTheme={toggleTheme}/>
+      <div className='setting-bar'>
+        <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
+        <SoundSetting />
+      </div>
+      <Counter theme={theme} />
+
     </div>
   )
 
